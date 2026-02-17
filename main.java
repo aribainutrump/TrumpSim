@@ -278,3 +278,38 @@ public final class TrumpSim {
         static final int MAX_INPUT_LEN = 2000;
         static final int MAX_REPLY_LEN = 1500;
     }
+
+    /** Sanitizes user input for safe handling. */
+    private static final class InputSanitizer {
+        static String apply(String raw) {
+            if (raw == null) return "";
+            String s = raw.trim();
+            if (s.length() > TrumpSimConfig.MAX_INPUT_LEN) s = s.substring(0, TrumpSimConfig.MAX_INPUT_LEN);
+            return s.replace("\u0000", "");
+        }
+    }
+
+    /** Optional in-memory session; no PII persisted. */
+    private static final class SessionHistory {
+        private static final int CAP = 50;
+        private final Deque<String> recent = new LinkedList<>();
+
+        void push(String query) {
+            recent.addFirst(InputSanitizer.apply(query));
+            while (recent.size() > CAP) recent.removeLast();
+        }
+
+        int size() { return recent.size(); }
+    }
+
+    // ========== TrumpSim Engine ==========
+    private static final class TrumpSimEngine {
+        private static final long SEED = 0x5E7B9D1A3C4F6082L;
+        private final Random rng;
+        private final XenonResponseBank bank;
+
+        TrumpSimEngine(XenonResponseBank bank) {
+            this.rng = new Random(SEED);
+            this.bank = bank;
+        }
+
