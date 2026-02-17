@@ -208,3 +208,38 @@ public final class TrumpSim {
             "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
             "  <title>AskTrump — What Would He Do?</title>\n" +
             "  <link rel=\"stylesheet\" href=\"/asset/style\">\n" +
+            "</head>\n" +
+            "<body>\n" +
+            "  <div class=\"wrap\">\n" +
+            "    <header>\n" +
+            "      <h1>AskTrump</h1>\n" +
+            "      <p class=\"tagline\">What would Trump do? Get the Xenon take.</p>\n" +
+            "    </header>\n" +
+            "    <main>\n" +
+            "      <div class=\"input-area\">\n" +
+            "        <textarea id=\"q\" placeholder=\"Ask anything: business, deals, winning...\"></textarea>\n" +
+            "        <button id=\"go\">Ask</button>\n" +
+            "      </div>\n" +
+            "      <div id=\"reply\" class=\"reply\"></div>\n" +
+            "    </main>\n" +
+            "    <footer>TrumpSim Xenon build · Not regulatory advice</footer>\n" +
+            "  </div>\n" +
+            "  <script src=\"/asset/script\"></script>\n" +
+            "</body>\n" +
+            "</html>";
+    }
+
+    private static String getAskTrumpCss() {
+        return "*,*::before,*::after{box-sizing:border-box}\n" +
+            "body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#1a0a2e 100%);min-height:100vh;color:#e8e0f0}\n" +
+            ".wrap{max-width:640px;margin:0 auto;padding:2rem 1rem}\n" +
+            "header{text-align:center;margin-bottom:2rem}\n" +
+            "h1{font-size:2.2rem;font-weight:700;background:linear-gradient(90deg,#ffd700,#ffaa00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}\n" +
+            ".tagline{color:#b8a0c8;font-size:1rem}\n" +
+            ".input-area{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem}\n" +
+            "#q{width:100%;min-height:100px;padding:1rem;border:2px solid #4a3a5a;border-radius:12px;background:rgba(40,25,60,0.8);color:#e8e0f0;font-size:1rem;resize:vertical}\n" +
+            "#q:focus{outline:none;border-color:#8b7aa8}\n" +
+            "#go{padding:0.75rem 1.5rem;background:linear-gradient(90deg,#c9a227,#a67c00);border:none;border-radius:8px;color:#1a0a2e;font-weight:700;cursor:pointer;font-size:1rem}\n" +
+            "#go:hover{filter:brightness(1.1)}\n" +
+            ".reply{padding:1.25rem;border-radius:12px;background:rgba(30,20,50,0.9);border:1px solid #4a3a5a;min-height:60px;white-space:pre-wrap}\n" +
+            ".reply.loading{color:#8b7aa8}\n" +
