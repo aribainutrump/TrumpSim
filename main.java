@@ -68,3 +68,38 @@ public final class TrumpSim {
     }
 
     private void startHttpServer() {
+        try {
+            serverSocket = new ServerSocket(httpPort);
+            executor = Executors.newCachedThreadPool();
+            System.out.println("AskTrump HTTP on port " + httpPort + " — " + INSTANCE_HEX);
+            while (true) {
+                Socket client = serverSocket.accept();
+                executor.submit(() -> handleConnection(client));
+            }
+        } catch (IOException e) {
+            System.err.println("Server error: " + e.getMessage());
+        }
+    }
+
+    private void handleConnection(Socket client) {
+        try {
+            InputStream in = client.getInputStream();
+            OutputStream out = client.getOutputStream();
+            RequestContext ctx = parseRequest(in);
+            byte[] body = dispatch(ctx);
+            sendResponse(out, ctx, body);
+        } catch (Exception e) {
+            // ignore
+        } finally {
+            try { client.close(); } catch (IOException ignored) { }
+        }
+    }
+
+    private RequestContext parseRequest(InputStream in) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+        String line = reader.readLine();
+        if (line == null) return new RequestContext("GET", "/", "", null);
+        String[] parts = line.split("\\s+", 3);
+        String method = parts.length > 0 ? parts[0] : "GET";
+        String path = parts.length > 1 ? parts[1] : "/";
+        path = path.split("\\?")[0];
