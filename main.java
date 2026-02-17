@@ -33,3 +33,38 @@ public final class TrumpSim {
 
     public static void main(String[] args) {
         int port = DEFAULT_HTTP_PORT;
+        for (int i = 0; i < args.length; i++) {
+            if ("--port".equals(args[i]) && i + 1 < args.length) {
+                try { port = Integer.parseInt(args[i + 1]); } catch (NumberFormatException e) { }
+                break;
+            }
+        }
+        TrumpSim app = new TrumpSim(port);
+        app.run(args);
+    }
+
+    private void run(String[] args) {
+        boolean cli = args.length > 0 && "--cli".equals(args[0]);
+        if (cli) {
+            runCli();
+        } else {
+            startHttpServer();
+        }
+    }
+
+    private void runCli() {
+        System.out.println("TrumpSim CLI — Xenon build. Type 'quit' to exit.");
+        try (Scanner sc = new Scanner(System.in)) {
+            while (true) {
+                System.out.print("You: ");
+                if (!sc.hasNextLine()) break;
+                String line = sc.nextLine().trim();
+                if (line.isEmpty()) continue;
+                if ("quit".equalsIgnoreCase(line) || "exit".equalsIgnoreCase(line)) break;
+                String out = engine.respond(line);
+                System.out.println("TrumpSim: " + out);
+            }
+        }
+    }
+
+    private void startHttpServer() {
