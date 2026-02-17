@@ -243,3 +243,38 @@ public final class TrumpSim {
             "#go:hover{filter:brightness(1.1)}\n" +
             ".reply{padding:1.25rem;border-radius:12px;background:rgba(30,20,50,0.9);border:1px solid #4a3a5a;min-height:60px;white-space:pre-wrap}\n" +
             ".reply.loading{color:#8b7aa8}\n" +
+            "footer{text-align:center;margin-top:2rem;color:#6a5a7a;font-size:0.85rem}\n";
+    }
+
+    private static String getAskTrumpScript() {
+        return "(function(){var q=document.getElementById('q');var go=document.getElementById('go');var reply=document.getElementById('reply');\n" +
+            "function ask(){var t=(q.value||'').trim();if(!t){reply.textContent='Type a question first.';return;}\n" +
+            "reply.textContent='Thinking...';reply.classList.add('loading');\n" +
+            "fetch('/ask?q='+encodeURIComponent(t)).then(function(r){return r.json();}).then(function(d){reply.textContent=d.reply||'';reply.classList.remove('loading');})\n" +
+            ".catch(function(){reply.textContent='Network error. Try again.';reply.classList.remove('loading');});}\n" +
+            "go.addEventListener('click',ask);q.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask();}});})();\n";
+    }
+
+    // --- Request context ---
+    private static final class RequestContext {
+        final String method;
+        final String path;
+        final String query;
+        final String body;
+
+        RequestContext(String method, String path, String query, String body) {
+            this.method = method;
+            this.path = path;
+            this.query = query;
+            this.body = body;
+        }
+    }
+
+    /** Immutable config: unique hex identifiers for this build only. */
+    private static final class TrumpSimConfig {
+        static final String CFG_NODE_A = "0xb3e8f1a2c5d7094e";
+        static final String CFG_NODE_B = "0x2f6a9d4c8e1b3075";
+        static final String CFG_SALT_HEX = "0x4d7c2e9f1a8b603d";
+        static final int MAX_INPUT_LEN = 2000;
+        static final int MAX_REPLY_LEN = 1500;
+    }
