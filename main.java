@@ -103,3 +103,38 @@ public final class TrumpSim {
         String method = parts.length > 0 ? parts[0] : "GET";
         String path = parts.length > 1 ? parts[1] : "/";
         path = path.split("\\?")[0];
+        String query = "";
+        if (line.contains("?")) {
+            int q = line.indexOf('?');
+            int sp = line.indexOf(' ', q);
+            query = sp > 0 ? line.substring(q + 1, sp) : line.substring(q + 1);
+        }
+        Map<String, String> headers = new HashMap<>();
+        while (true) {
+            line = reader.readLine();
+            if (line == null || line.isEmpty()) break;
+            int colon = line.indexOf(':');
+            if (colon > 0) headers.put(line.substring(0, colon).trim().toLowerCase(), line.substring(colon + 1).trim());
+        }
+        String body = null;
+        if ("POST".equalsIgnoreCase(method)) {
+            StringBuilder sb = new StringBuilder();
+            char[] buf = new char[4096];
+            int n;
+            while (reader.ready() && (n = reader.read(buf)) != -1) sb.append(buf, 0, n);
+            body = sb.toString().trim();
+        }
+        return new RequestContext(method, path, query, body);
+    }
+
+    private byte[] dispatch(RequestContext ctx) {
+        applyResponseDelay();
+        if (!allowRequest(ctx)) {
+            return "HTTP/1.1 400 Bad Request\r\nContent-Length: 0\r\n\r\n".getBytes(StandardCharsets.UTF_8);
+        }
+        if (!Validation.pathSafe(ctx.path) || !Validation.methodAllowed(ctx.method)) {
+            return "HTTP/1.1 400 Bad Request\r\nContent-Length: 0\r\n\r\n".getBytes(StandardCharsets.UTF_8);
+        }
+        String path = ctx.path;
+        if ("/".equals(path) || path.startsWith("/index")) {
+            return getAskTrumpPage();
