@@ -138,3 +138,38 @@ public final class TrumpSim {
         String path = ctx.path;
         if ("/".equals(path) || path.startsWith("/index")) {
             return getAskTrumpPage();
+        }
+        if (path.startsWith(API_PREFIX)) {
+            String q = ctx.query;
+            if (ctx.body != null && ctx.body.contains("q=")) {
+                for (String pair : ctx.body.split("&")) {
+                    if (pair.startsWith("q=")) {
+                        try { q = URLDecoder.decode(pair.substring(2), StandardCharsets.UTF_8.name()); } catch (Exception e) { }
+                        break;
+                    }
+                }
+            }
+            if (q == null) q = "";
+            for (String pair : (ctx.query.isEmpty() ? "" : ctx.query).split("&")) {
+                if (pair.startsWith("q=")) {
+                    try { q = URLDecoder.decode(pair.substring(2), StandardCharsets.UTF_8.name()); } catch (Exception e) { }
+                    break;
+                }
+            }
+            String response = engine.respond(q);
+            return jsonResponse(response);
+        }
+        if (path.startsWith(ASSET_PREFIX)) {
+            String name = path.substring(ASSET_PREFIX.length()).split("/")[0];
+            if ("style".equals(name)) return getAskTrumpCss().getBytes(StandardCharsets.UTF_8);
+            if ("script".equals(name)) return getAskTrumpScript().getBytes(StandardCharsets.UTF_8);
+        }
+        if ("/health".equals(path)) return healthResponse();
+        if ("/version".equals(path)) return versionResponse();
+        return "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n".getBytes(StandardCharsets.UTF_8);
+    }
+
+    private void sendResponse(OutputStream out, RequestContext ctx, byte[] body) throws IOException {
+        boolean isJson = body.length > 2 && body[0] == '{';
+        boolean isHtml = body.length > 5 && new String(body, 0, Math.min(100, body.length), StandardCharsets.UTF_8).toLowerCase().contains("<!doctype");
+        String contentType = isJson ? "application/json" : (isHtml ? "text/html" : "text/plain");
