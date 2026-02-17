@@ -383,3 +383,38 @@ public final class TrumpSim {
         }
 
         String respond(String input) {
+            input = InputSanitizer.apply(input);
+            String normalized = input.toLowerCase();
+            if (normalized.isEmpty()) return bank.pick(bank.genericOpeners);
+            if (normalized.length() <= 3) return bank.pickOneLiner();
+            CategoryHint hint = categorize(normalized);
+            List<String> pool = bank.forCategory(hint);
+            String reply = bank.pick(pool);
+            if (reply.length() > TrumpSimConfig.MAX_REPLY_LEN) reply = reply.substring(0, TrumpSimConfig.MAX_REPLY_LEN);
+            return reply;
+        }
+
+        private CategoryHint categorize(String text) {
+            int deal = KeywordExtractor.scoreCategory(text, KeywordExtractor.DEAL_TERMS);
+            int media = KeywordExtractor.scoreCategory(text, KeywordExtractor.MEDIA_TERMS);
+            int win = KeywordExtractor.scoreCategory(text, KeywordExtractor.WIN_TERMS);
+            int money = KeywordExtractor.scoreCategory(text, KeywordExtractor.MONEY_TERMS);
+            int lead = KeywordExtractor.scoreCategory(text, KeywordExtractor.LEAD_TERMS);
+            int opp = KeywordExtractor.scoreCategory(text, KeywordExtractor.OPP_TERMS);
+            int truth = KeywordExtractor.scoreCategory(text, KeywordExtractor.TRUTH_TERMS);
+            int people = KeywordExtractor.scoreCategory(text, KeywordExtractor.PEOPLE_TERMS);
+            int advice = KeywordExtractor.scoreCategory(text, KeywordExtractor.ADVICE_TERMS);
+            int best = Math.max(Math.max(deal, media), Math.max(win, money));
+            best = Math.max(best, Math.max(Math.max(lead, opp), Math.max(Math.max(truth, people), advice)));
+            if (best == 0) return CategoryHint.GENERIC;
+            if (deal == best) return CategoryHint.DEAL;
+            if (media == best) return CategoryHint.MEDIA;
+            if (win == best) return CategoryHint.WINNING;
+            if (money == best) return CategoryHint.MONEY;
+            if (lead == best) return CategoryHint.LEADERSHIP;
+            if (opp == best) return CategoryHint.OPPONENT;
+            if (truth == best) return CategoryHint.TRUTH;
+            if (people == best) return CategoryHint.PEOPLE;
+            if (advice == best) return CategoryHint.ADVICE;
+            if (text.matches(".*\\b(deal|negotiat|contract|merge|acquisit)\\b.*")) return CategoryHint.DEAL;
+            if (text.matches(".*\\b(media|press|twitter|news|tweet)\\b.*")) return CategoryHint.MEDIA;
