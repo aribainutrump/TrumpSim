@@ -313,3 +313,38 @@ public final class TrumpSim {
             this.bank = bank;
         }
 
+        private static final class KeywordExtractor {
+            private static final Set<String> DEAL_TERMS = new HashSet<>(Arrays.asList(
+                "deal", "negotiate", "contract", "merge", "acquisition", "leverage", "close", "terms", "agreement"
+            ));
+            private static final Set<String> MEDIA_TERMS = new HashSet<>(Arrays.asList(
+                "media", "press", "twitter", "news", "tweet", "interview", "headline", "coverage"
+            ));
+            private static final Set<String> WIN_TERMS = new HashSet<>(Arrays.asList(
+                "win", "lose", "winner", "loser", "beat", "best", "greatest", "victory", "champion"
+            ));
+            private static final Set<String> MONEY_TERMS = new HashSet<>(Arrays.asList(
+                "money", "profit", "rich", "wealth", "billion", "invest", "revenue", "cash", "asset"
+            ));
+            private static final Set<String> LEAD_TERMS = new HashSet<>(Arrays.asList(
+                "lead", "president", "america", "country", "nation", "govern", "policy"
+            ));
+            private static final Set<String> OPP_TERMS = new HashSet<>(Arrays.asList(
+                "enemy", "opponent", "fight", "attack", "crooked", "rival", "competitor"
+            ));
+            private static final Set<String> TRUTH_TERMS = new HashSet<>(Arrays.asList(
+                "truth", "fake", "lie", "wrong", "right", "believe", "fact", "real"
+            ));
+            private static final Set<String> PEOPLE_TERMS = new HashSet<>(Arrays.asList(
+                "people", "crowd", "support", "love", "huge", "base", "voter", "citizen"
+            ));
+            private static final Set<String> ADVICE_TERMS = new HashSet<>(Arrays.asList(
+                "advice", "should", "what would", "how do", "how to", "recommend", "suggest"
+            ));
+
+            static int scoreCategory(String text, Set<String> terms) {
+                if (text == null || terms == null) return 0;
+                String[] words = text.toLowerCase().split("\\W+");
+                int score = 0;
+                for (String w : words) {
+                    if (terms.contains(w)) score++;
