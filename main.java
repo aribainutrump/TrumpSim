@@ -348,3 +348,38 @@ public final class TrumpSim {
                 int score = 0;
                 for (String w : words) {
                     if (terms.contains(w)) score++;
+                    for (String t : terms) if (w.contains(t) || t.contains(w)) score++;
+                }
+                return score;
+            }
+
+            static boolean hasDealKeyword(String t) {
+                return t != null && (t.contains("deal") || t.contains("negotiat") || t.contains("contract"));
+            }
+            static boolean hasMediaKeyword(String t) {
+                return t != null && (t.contains("media") || t.contains("press") || t.contains("tweet"));
+            }
+            static boolean hasWinKeyword(String t) {
+                return t != null && (t.contains("win") || t.contains("winner") || t.contains("beat"));
+            }
+            static boolean hasMoneyKeyword(String t) {
+                return t != null && (t.contains("money") || t.contains("profit") || t.contains("billion"));
+            }
+            static boolean hasLeadKeyword(String t) {
+                return t != null && (t.contains("lead") || t.contains("president") || t.contains("america"));
+            }
+            static boolean hasOppKeyword(String t) {
+                return t != null && (t.contains("enemy") || t.contains("opponent") || t.contains("fight"));
+            }
+            static boolean hasTruthKeyword(String t) {
+                return t != null && (t.contains("truth") || t.contains("fake") || t.contains("lie"));
+            }
+            static boolean hasPeopleKeyword(String t) {
+                return t != null && (t.contains("people") || t.contains("crowd") || t.contains("support"));
+            }
+            static boolean hasAdviceKeyword(String t) {
+                return t != null && (t.contains("advice") || t.contains("should") || t.contains("how to"));
+            }
+        }
+
+        String respond(String input) {
