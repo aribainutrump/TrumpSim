@@ -173,3 +173,38 @@ public final class TrumpSim {
         boolean isJson = body.length > 2 && body[0] == '{';
         boolean isHtml = body.length > 5 && new String(body, 0, Math.min(100, body.length), StandardCharsets.UTF_8).toLowerCase().contains("<!doctype");
         String contentType = isJson ? "application/json" : (isHtml ? "text/html" : "text/plain");
+        String header = "HTTP/1.1 200 OK\r\nContent-Type: " + contentType + "; charset=utf-8\r\nContent-Length: " + body.length + "\r\nConnection: close\r\n\r\n";
+        out.write(header.getBytes(StandardCharsets.UTF_8));
+        out.write(body);
+        out.flush();
+    }
+
+    private byte[] jsonResponse(String text) {
+        String escaped = text.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "");
+        return ("{\"reply\":\"" + escaped + "\",\"build\":\"" + BUILD_SALT + "\"}").getBytes(StandardCharsets.UTF_8);
+    }
+
+    private byte[] healthResponse() {
+        String json = "{\"status\":\"ok\",\"instance\":\"" + INSTANCE_HEX + "\"}";
+        return json.getBytes(StandardCharsets.UTF_8);
+    }
+
+    private byte[] versionResponse() {
+        String json = "{\"name\":\"TrumpSim\",\"build\":\"" + BUILD_SALT + "\",\"api\":\"1.0\"}";
+        return json.getBytes(StandardCharsets.UTF_8);
+    }
+
+    private byte[] getAskTrumpPage() {
+        String html = getAskTrumpHtml();
+        return html.getBytes(StandardCharsets.UTF_8);
+    }
+
+    // --- Inline AskTrump HTML ---
+    private static String getAskTrumpHtml() {
+        return "<!DOCTYPE html>\n" +
+            "<html lang=\"en\">\n" +
+            "<head>\n" +
+            "  <meta charset=\"UTF-8\">\n" +
+            "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+            "  <title>AskTrump — What Would He Do?</title>\n" +
+            "  <link rel=\"stylesheet\" href=\"/asset/style\">\n" +
