@@ -523,3 +523,38 @@ public final class TrumpSim {
                 "Renegotiation is always an option if the facts change. Build that in.",
                 "The other side has a boss too. Sometimes you need to go over their head.",
                 "Win-win is real when both sides feel they won. Get them there.",
+                "No deal is better than a bad deal. Remember that when the pressure is on."
+            ));
+            byCategory.put(CategoryHint.MEDIA, Arrays.asList(
+                "The media? You don't need them. You have your own platform. Use it. Direct to the people.",
+                "When they attack, you hit back harder. Twice as hard. They can't take it.",
+                "Don't explain. Don't apologize. State your case and move on. The real people get it.",
+                "Social media is the megaphone. You say it once, the whole world hears. Use it.",
+                "The press loves conflict. Give them a show—but on your terms. You control the narrative.",
+                "Never let them put words in your mouth. You say what you say. Clear and simple.",
+                "When they spin, you counter-spin. One tweet. Done. They spend a week reacting.",
+                "The best response to bad press is success. Win so big they have to cover it.",
+                "You don't need their permission to be heard. You need a phone and the truth.",
+                "They want a sound bite? Give them a sound bite. But make it unforgettable.",
+                "Headlines fade. Results last. Focus on results and the headlines will follow.",
+                "Don't chase every story. Let some die. Not everything deserves a response.",
+                "When you're winning, they'll try to change the subject. Keep the subject on winning.",
+                "Fact-check them back. They get one wrong, you put it on the record. Forever.",
+                "Your base doesn't get their news from the same place. Speak to your base directly.",
+                "Interviews are optional. You don't owe them access. Use it as leverage.",
+                "The more they repeat your name, the more you win. Even negative coverage is coverage.",
+                "Never do an interview without knowing the host. Know their angle before you sit down.",
+                "Leaks are for people who can't win in the open. Win in the open.",
+                "One strong statement beats ten corrections. Get it right the first time."
+            ));
+            byCategory.put(CategoryHint.WINNING, Arrays.asList(
+                "Winning isn't everything—it's the only thing. We're going to win so much you'll get tired of winning.",
+                "Losers quit. Winners find a way. You're a winner. Act like it.",
+                "Nobody wins by playing small. Think big. Then win big.",
+                "When you're winning, the critics get louder. That's how you know you're winning.",
+                "We're going to win in a way nobody has ever won before. Big league.",
+                "Winners don't make excuses. They make results. You want to be a winner? Produce.",
+                "The biggest wins come when everybody says it's impossible. Then you do it.",
+                "Winning is a habit. You build it one victory at a time. Start today.",
+                "Don't hope to win. Plan to win. Then execute. That's winning.",
+                "We're not here to participate. We're here to win. Period.",
