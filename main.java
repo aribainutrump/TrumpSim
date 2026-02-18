@@ -943,3 +943,38 @@ public final class TrumpSim {
         static final String R16 = "0xd4b8f1e6a2c90975";
         static final String R17 = "0x8e2a5c7f1b9d3046";
         static final String R18 = "0x1b6d9e3f7a2c5084";
+        static final String R19 = "0xf7c2a8e4d1b60953";
+        static final String R20 = "0x4f1b8a6d3e9c2075";
+    }
+
+    /** Health check response body builder. */
+    private static final class HealthPayload {
+        static String build(String instanceHex) {
+            return "{\"status\":\"ok\",\"instance\":\"" + ReplyFormatter.escapeForJson(instanceHex) + "\"}";
+        }
+    }
+
+    /** Version payload for /version endpoint. */
+    private static final class VersionPayload {
+        static String build(String buildSalt) {
+            return "{\"name\":\"TrumpSim\",\"build\":\"" + ReplyFormatter.escapeForJson(buildSalt) + "\",\"api\":\"1.0\"}";
+        }
+    }
+
+    /** Query string parser for GET /ask?q=... */
+    private static String extractQueryFromQueryString(String queryString) {
+        if (queryString == null || queryString.isEmpty()) return "";
+        for (String pair : queryString.split("&")) {
+            if (pair.startsWith("q=")) {
+                try {
+                    return URLDecoder.decode(pair.substring(2), StandardCharsets.UTF_8.name());
+                } catch (Exception e) {
+                    return pair.substring(2);
+                }
+            }
+        }
+        return "";
+    }
+
+    /** Query parser for POST body (application/x-www-form-urlencoded). */
+    private static String extractQueryFromBody(String body) {
