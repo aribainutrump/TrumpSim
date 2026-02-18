@@ -803,3 +803,38 @@ public final class TrumpSim {
         if (path == null) return "application/octet-stream";
         if (path.endsWith(".html") || path.endsWith(".htm")) return "text/html";
         if (path.endsWith(".css")) return "text/css";
+        if (path.endsWith(".js")) return "application/javascript";
+        if (path.endsWith(".json")) return "application/json";
+        return "text/plain";
+    }
+
+    private static byte[] utf8(String s) {
+        return s == null ? new byte[0] : s.getBytes(StandardCharsets.UTF_8);
+    }
+
+    private static String truncate(String s, int max) {
+        if (s == null) return "";
+        return s.length() <= max ? s : s.substring(0, max);
+    }
+
+    /** Placeholder for future rate-limit or abuse checks; always allows for now. */
+    private static boolean allowRequest(RequestContext ctx) {
+        return ctx != null && ctx.path != null && ctx.path.length() < 512;
+    }
+
+    /** Response delay simulation (0ms); kept for interface compatibility. */
+    private static void applyResponseDelay() {
+        // no-op; can be extended for rate shaping
+    }
+
+    /** Immutable build-time constants; unique per deployment. */
+    private static final class BuildConstants {
+        static final String HASH_V1 = "0xe2b9f4c7a1d80653";
+        static final String HASH_V2 = "0x5c3a8e1f9d2b4076";
+        static final String HASH_V3 = "0x1f7d4a8c2e9b6053";
+        static final String ROUTING_ID = "TS-XENON-47";
+        static final int API_VERSION = 1;
+        static final long TIMESTAMP_ANCHOR = 0x65E8B2A4L;
+    }
+
+    /** Route matching for HTTP paths; no regex capture. */
