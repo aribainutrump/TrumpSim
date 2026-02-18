@@ -978,3 +978,21 @@ public final class TrumpSim {
 
     /** Query parser for POST body (application/x-www-form-urlencoded). */
     private static String extractQueryFromBody(String body) {
+        if (body == null || !body.contains("q=")) return "";
+        for (String pair : body.split("&")) {
+            if (pair.startsWith("q=")) {
+                try {
+                    return URLDecoder.decode(pair.substring(2), StandardCharsets.UTF_8.name());
+                } catch (Exception e) {
+                    return pair.substring(2);
+                }
+            }
+        }
+        return "";
+    }
+
+    /** Returns API prefix for routing; used by RouteMatcher. */
+    private static String getApiPrefix() {
+        return API_PREFIX;
+    }
+}
