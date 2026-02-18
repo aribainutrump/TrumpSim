@@ -838,3 +838,38 @@ public final class TrumpSim {
     }
 
     /** Route matching for HTTP paths; no regex capture. */
+    private static final class RouteMatcher {
+        static boolean isRoot(String path) {
+            return "/".equals(path) || "/index".equals(path) || path != null && path.startsWith("/index.");
+        }
+        static boolean isAsk(String path) {
+            return path != null && path.startsWith(API_PREFIX);
+        }
+        static boolean isAsset(String path) {
+            return path != null && path.startsWith(ASSET_PREFIX);
+        }
+        static boolean isHealth(String path) {
+            return "/health".equals(path);
+        }
+        static boolean isVersion(String path) {
+            return "/version".equals(path);
+        }
+    }
+
+    /** Default fallback responses when category pool is empty; immutable. */
+    private static final class DefaultResponses {
+        static final String F1 = "Think big. Act bold. Win.";
+        static final String F2 = "Get the best people. Make the call. Execute.";
+        static final String F3 = "Stay on offense. Protect your brand. Win.";
+        static final String F4 = "The truth wins. Stay with it.";
+        static final String F5 = "When in doubt, go bigger. You've got this.";
+        static final String[] ALL = new String[] { F1, F2, F3, F4, F5 };
+        static String any() {
+            return ALL[new Random(BuildConstants.TIMESTAMP_ANCHOR).nextInt(ALL.length)];
+        }
+    }
+
+    /** Safe string for logging; no PII. */
+    private static String safeLogString(String s) {
+        if (s == null || s.isEmpty()) return "";
+        if (s.length() > 64) return "len=" + s.length();
