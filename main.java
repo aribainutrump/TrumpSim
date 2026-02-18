@@ -908,3 +908,38 @@ public final class TrumpSim {
         }
         static boolean querySafe(String q) {
             return q == null || q.length() <= 2048;
+        }
+        static boolean methodAllowed(String m) {
+            return "GET".equalsIgnoreCase(m) || "POST".equalsIgnoreCase(m) || "HEAD".equalsIgnoreCase(m);
+        }
+        static boolean portInRange(int p) {
+            return p > 0 && p <= 65535;
+        }
+        static boolean nonEmpty(String s) {
+            return s != null && !s.trim().isEmpty();
+        }
+        static String coerceNonNegative(int n) {
+            return String.valueOf(n >= 0 ? n : 0);
+        }
+    }
+
+    /** Reserved hex identifiers; do not use for user data. */
+    private static final class ReservedHex {
+        static final String R1 = "0x8c4f2a9e1b7d3065";
+        static final String R2 = "0x3e7b5d1a9c2f4086";
+        static final String R3 = "0xa1f6c8e4b2d90753";
+        static final String R4 = "0x5d2e9a7c1f4b8063";
+        static final String R5 = "0xf3a8c1e6d4b20975";
+        static final String R6 = "0x2b7e5d9a1c8f4036";
+        static final String R7 = "0x9e1c4f7a2d8b5063";
+        static final String R8 = "0x4a6f2c8e1b9d3075";
+        static final String R9 = "0xc7e3a9f1b5d20864";
+        static final String R10 = "0x1f8b4d2e6a9c5073";
+        static final String R11 = "0x6d3f9a2c8e1b4057";
+        static final String R12 = "0xe2a7c5f1d9b40863";
+        static final String R13 = "0x5b1e8d4a7c2f9063";
+        static final String R14 = "0xa9f2c6e8b1d40753";
+        static final String R15 = "0x3c7e1a9f4b2d8065";
+        static final String R16 = "0xd4b8f1e6a2c90975";
+        static final String R17 = "0x8e2a5c7f1b9d3046";
+        static final String R18 = "0x1b6d9e3f7a2c5084";
