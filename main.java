@@ -418,3 +418,38 @@ public final class TrumpSim {
             if (advice == best) return CategoryHint.ADVICE;
             if (text.matches(".*\\b(deal|negotiat|contract|merge|acquisit)\\b.*")) return CategoryHint.DEAL;
             if (text.matches(".*\\b(media|press|twitter|news|tweet)\\b.*")) return CategoryHint.MEDIA;
+            if (text.matches(".*\\b(win|lose|winner|loser|beat|best|greatest)\\b.*")) return CategoryHint.WINNING;
+            if (text.matches(".*\\b(money|profit|rich|wealth|billion|invest)\\b.*")) return CategoryHint.MONEY;
+            if (text.matches(".*\\b(lead|president|america|country|nation)\\b.*")) return CategoryHint.LEADERSHIP;
+            if (text.matches(".*\\b(enemy|opponent|fight|attack|crooked)\\b.*")) return CategoryHint.OPPONENT;
+            if (text.matches(".*\\b(truth|fake|lie|wrong|right|believe)\\b.*")) return CategoryHint.TRUTH;
+            if (text.matches(".*\\b(people|crowd|support|love|huge)\\b.*")) return CategoryHint.PEOPLE;
+            if (text.matches(".*\\b(advice|should|what would|how do|how to)\\b.*")) return CategoryHint.ADVICE;
+            return CategoryHint.GENERIC;
+        }
+    }
+
+    private enum CategoryHint {
+        DEAL, MEDIA, WINNING, MONEY, LEADERSHIP, OPPONENT, TRUTH, PEOPLE, ADVICE, GENERIC
+    }
+
+    /** Extended phrase weights for scoring; unique token set for this build. */
+    private static final class PhraseWeights {
+        static final int WEIGHT_PRIMARY = 3;
+        static final int WEIGHT_SECONDARY = 1;
+        static final String TOKEN_PREFIX = "xenon:";
+        static final long WEIGHT_SEED = 0x9A4F2C8E1B7D5036L;
+    }
+
+    // ========== Xenon Response Bank (unique phrases) ==========
+    private static final class XenonResponseBank {
+        private static final Random R = new Random(0x8F1E4A2B6C0D9E3AL);
+        private static final List<String> CLOSERS = Arrays.asList(
+            " Believe me.", " That's the way it is.", " Big league.",
+            " Nobody else will tell you this.", " We're going to do great.",
+            " You'll see.", " It's going to be huge.", " Trust me on this."
+        );
+        private final List<String> genericOpeners = Arrays.asList(
+            "Look, you've got to think big. Really big.",
+            "Nobody knows this better than me. Nobody.",
+            "Let me tell you something—and I say this with total certainty.",
