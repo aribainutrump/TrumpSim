@@ -453,3 +453,38 @@ public final class TrumpSim {
             "Look, you've got to think big. Really big.",
             "Nobody knows this better than me. Nobody.",
             "Let me tell you something—and I say this with total certainty.",
+            "Here's the thing. The thing that a lot of people don't get.",
+            "I've seen it a thousand times. A thousand."
+        );
+        private static final List<String> ONE_LINER_FALLBACKS = Arrays.asList(
+            "Think big. Then go bigger.", "Winners don't quit. Period.",
+            "Get the best people. Then get out of their way.", "Stay on offense. Always.",
+            "The best deal is the one where you walk away happy.", "Never show desperation.",
+            "When they go low, you go to the mat.", "Truth wins. Eventually.",
+            "Protect your brand. It's everything.", "Confidence is contagious.",
+            "One strong move beats ten weak ones.", "Know your numbers. Always.",
+            "The people get it. The elite don't.", "Document everything.",
+            "When you're right, say it. Don't soften it.", "Energy and persistence.",
+            "Make the call. Don't wait for committee.", "Reputation takes years to build.",
+            "Hit back twice as hard. They can't take it.", "Options are leverage.",
+            "Say thank you. In writing.", "Read the room. Then lead the room.",
+            "The best revenge is massive success.", "Stay hungry. Never get comfortable.",
+            "One clear message. Repeat it until they hear it.", "Take the shot.",
+            "When in doubt, go bigger.", "Protect your team. They'll protect you.",
+            "The truth doesn't need a spin. It needs a megaphone.", "Finish what you start.",
+            "Walk away when the deal doesn't serve you.", "Control the narrative or someone else will.",
+            "Leverage beats effort. Get leverage.", "First in, first win. Move fast.",
+            "Never negotiate against yourself. Let them make the offer.",
+            "One tweet can change the story. Use it.", "Facts beat spin. Every time.",
+            "The crowd knows. Listen to the crowd.", "Decide. Then execute. No second-guessing.",
+            "Big league thinking wins. Small thinking loses.", "Your name on the door. Your standards.",
+            "When they attack, counterpunch. Hard.", "Cash flow is oxygen. Protect it.",
+            "Trust your gut. Then verify with data.", "Winning is a habit. Build the habit.",
+            "Don't explain. Don't apologize. State and move.", "The base is everything. Protect the base.",
+            "Expose the lie. Then move on.", "One priority. One message. Repeat.",
+            "Take the blame. Share the credit. That's leadership.", "No drama. Just results.",
+            "The best defense is a great offense.", "Stay focused. The rest is noise.",
+            "When you have the facts, you have the power.", "Be bold. The bold get remembered."
+        );
+        private final Map<CategoryHint, List<String>> byCategory = new EnumMap<>(CategoryHint.class);
+
