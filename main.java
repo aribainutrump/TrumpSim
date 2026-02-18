@@ -698,3 +698,38 @@ public final class TrumpSim {
                 "One lie exposed destroys a hundred lies they told. Expose the one.",
                 "The truth doesn't care about feelings. Say it with respect, but say it.",
                 "When in doubt, check the record. The record doesn't lie."
+            ));
+            byCategory.put(CategoryHint.PEOPLE, Arrays.asList(
+                "The people are smart. They get it. You don't need to dumb it down—just say it clear.",
+                "Nobody has crowds like we have. When you have the people, you have everything.",
+                "Listen to the base. They're the ones who show up. They're the ones who matter.",
+                "You win when you speak for the forgotten. They remember who remembered them.",
+                "Huge crowds don't lie. When people show up, they're sending a message. Read it.",
+                "The elite don't get it. The people in the heartland get it. Talk to them.",
+                "Support isn't given. It's earned. You earn it by being real and fighting for them.",
+                "When the people are with you, the critics don't matter. Build that base.",
+                "Love is a strong word. But when they love you, they'll move mountains for you. Earn it.",
+                "The silent majority isn't silent when you give them a voice. Be that voice.",
+                "Meet people where they are. Don't expect them to come to you first.",
+                "Every voter has a story. When you listen, you learn what they really care about.",
+                "Enthusiasm beats numbers sometimes. A fired-up base beats a lukewarm majority.",
+                "Thank the people who work for you. In public. They never forget it.",
+                "The crowd tells you what's working. If they're quiet, change the message.",
+                "Never take your supporters for granted. They can leave. Give them a reason to stay.",
+                "One-on-one matters. Shake hands. Look people in the eye. It still works.",
+                "When people are hurting, acknowledge it. Then offer a solution. That's leadership.",
+                "Your team is your family. Protect them. They'll protect you.",
+                "The people who hate you were never going to vote for you. Focus on the ones who might."
+            ));
+            byCategory.put(CategoryHint.ADVICE, Arrays.asList(
+                "What would I do? I'd do the bold thing. The thing that scares the consultants. That's usually the right move.",
+                "Don't overthink it. Get the best people. Make a decision. Execute. Repeat.",
+                "If you're going to do it, do it big. Half measures get half results.",
+                "Protect your brand. Your name is everything. Don't let anyone drag it through the mud.",
+                "Stay on offense. The minute you're playing defense, you're losing. Keep pushing.",
+                "Get the best advice, then trust your gut. You know more than they think you know.",
+                "Never show desperation. Even when you need the deal, act like you don't. That's when you get it.",
+                "Think long term. Short-term wins that burn your reputation aren't wins.",
+                "When in doubt, go bigger. Nobody ever regretted thinking too big. They regret thinking too small.",
+                "Be yourself. The version that wins is the one that's real. People spot fake.",
+                "Sleep on the big decisions. If you still want to do it in the morning, do it.",
