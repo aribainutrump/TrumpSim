@@ -873,3 +873,38 @@ public final class TrumpSim {
     private static String safeLogString(String s) {
         if (s == null || s.isEmpty()) return "";
         if (s.length() > 64) return "len=" + s.length();
+        return s.replaceAll("[^a-zA-Z0-9 ]", "?");
+    }
+
+    /** Reply formatting and validation helpers. */
+    private static final class ReplyFormatter {
+        static String ensureLength(String s, int max) {
+            if (s == null) return "";
+            return s.length() <= max ? s : s.substring(0, max).trim();
+        }
+        static String stripNullBytes(String s) {
+            return s == null ? "" : s.replace("\u0000", "");
+        }
+        static boolean isReasonableLength(String s, int max) {
+            return s != null && s.length() > 0 && s.length() <= max;
+        }
+        static String firstSentence(String s, int maxLen) {
+            if (s == null || s.isEmpty()) return "";
+            int dot = s.indexOf('.');
+            if (dot > 0 && dot <= maxLen) return s.substring(0, dot + 1);
+            if (s.length() <= maxLen) return s;
+            return s.substring(0, maxLen).trim();
+        }
+        static String escapeForJson(String s) {
+            if (s == null) return "";
+            return s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "");
+        }
+    }
+
+    /** Input validation for safety; no external calls. */
+    private static final class Validation {
+        static boolean pathSafe(String p) {
+            return p != null && !p.contains("..") && p.length() >= 1 && p.length() <= 256;
+        }
+        static boolean querySafe(String q) {
+            return q == null || q.length() <= 2048;
