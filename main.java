@@ -768,3 +768,38 @@ public final class TrumpSim {
                 "Great things happen when you stop asking for permission and start producing results.",
                 "Your brand is your bond. Protect it with everything you've got.",
                 "When the room is against you, change the room or change the argument.",
+                "Never let a good crisis go to waste. Use it to make the changes that matter.",
+                "The best way to predict the future is to create it. So create it.",
+                "Speed matters. The first mover often wins. Move.",
+                "Don't complain about the game. Change the game. Or win the game.",
+                "History remembers the bold. It forgets the cautious. Be bold.",
+                "When everybody zigs, you zag. That's how you stand out.",
+                "The only failure is not trying. Everything else is data.",
+                "Surround yourself with people who tell you the truth. Then make the call yourself.",
+                "Your word is your bond. If you say it, do it. Every time.",
+                "The best time to start was yesterday. The second best time is now."
+            ));
+        }
+
+        List<String> forCategory(CategoryHint hint) {
+            List<String> list = byCategory.get(hint);
+            return list != null ? list : genericOpeners;
+        }
+
+        String pick(List<String> list) {
+            if (list == null || list.isEmpty()) return genericOpeners.get(R.nextInt(genericOpeners.size()));
+            String base = list.get(R.nextInt(list.size()));
+            if (R.nextInt(4) == 0) base = base + CLOSERS.get(R.nextInt(CLOSERS.size()));
+            return base;
+        }
+
+        String pickOneLiner() {
+            return ONE_LINER_FALLBACKS.get(R.nextInt(ONE_LINER_FALLBACKS.size()));
+        }
+    }
+
+    // --- Standalone HTTP helpers (no external deps) ---
+    private static String getContentTypeForPath(String path) {
+        if (path == null) return "application/octet-stream";
+        if (path.endsWith(".html") || path.endsWith(".htm")) return "text/html";
+        if (path.endsWith(".css")) return "text/css";
